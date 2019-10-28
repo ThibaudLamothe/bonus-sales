@@ -1,0 +1,12 @@
+numpy
+plotly
+gunicorn
+pandas==0.24.0
+
+dash
+dash-daq
+dash-renderer
+dash-core-components
+dash-html-components
+dash-table-experiments 
+
