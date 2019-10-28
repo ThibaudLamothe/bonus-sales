@@ -5,38 +5,35 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 # URL definition
-favicon_url = 'https://capgemini.github.io/images/logo-square.png'
 img_top_url = 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Invent_Logo_2COL_RGB.png'
 
-
+# Create application
 app = dash.Dash(__name__)
 server = app.server
 
-
+# Page name
 app.title = 'Sales - Bonus calculation'
 
-app.head = [
-    html.Link(
-        href='medal.ico',
-        rel='icon'
-    ),
-]
+#############################################################################
+#                               HTML PAGE
+#############################################################################
 
 
+# Create layout
 app.layout = html.Section(
     children=[
         html.Div(
             className='calculPart',
             children=[
-                # html.Span("BONUS CALCULATION", className='app-title'),
-                html.Div(html.Img(className='test', src=img_top_url, height="200")),
+                html.Div(html.Img(className='test', src=img_top_url, height="150")),
                 html.H1("Application de calcul du Bonus à destination des Sales"),
                 html.P("Conformément à la politique établie de l'entreprise, cette page vous permettra de faire la simulation de Bonus."),
+                html.Br(),
                 html.Div('Entrez votre salaire brut'),
                 html.Div(
                     dcc.Input(
                         id='input-box-1',
-                        type='text', 
+                        type="number", 
                         placeholder=40000
                     ),
                     # html.P("€"),
@@ -76,6 +73,18 @@ app.layout = html.Section(
     ]
 )
 
+#############################################################################
+#                               CALLBACKS
+#############################################################################
+
+def create_rep(text, color):
+    """
+    """
+    rep = html.Div(
+        children=[text],
+        style={'color':color}
+    )
+    return rep
 
 @app.callback(
     dash.dependencies.Output('output-container-button', 'children'),
@@ -84,28 +93,35 @@ app.layout = html.Section(
     dash.dependencies.State('input-box-2', 'value'),
     dash.dependencies.State('input-box-3', 'value')]
     )
-def update_output(n_click, salaire, coef, contrat):
-    
-    def create_rep(text, color):
-        rep = html.Div(
-            children=[text],
-            style={'color':color}
-        )
-        return rep
-    
+
+def bonus_calculation(n_click, salaire, coef, contrat):
+    # Première fois, renvoie une valeur par défaut
+    if n_click is None:
+        text = "Calcul du bonus à venir. Merci de remplir les champs."
+        return create_rep(text, 'black')
+
     try:
+        # Conversion des valeurs indiquées
         salaire = int(salaire)
         contrat = int(contrat)
         coef = int(coef)
+
+        # Calcul du bonus
         bonus = (salaire + contrat * 5000)* (1 + 0.1 * coef) / 10
         bonus = np.round(bonus, 2)
-    except:
-        # return create_rep("Calcul du bonus à venir", 'black')
-        return create_rep("Remplissez les 3 champs pour connaitre votre bonus.", 'red')
     
+    except:
+        text = "Remplissez les 3 champs pour connaitre votre bonus."
+        return create_rep(text, 'red')
+    
+    # Si tout est en règle on renvoie le bonus
     text = 'Votre bonus annuel sera de  {} €.'.format(str(bonus))
     return create_rep(text, 'green')
 
+
+#############################################################################
+#                               RUNNING APPLICATION
+#############################################################################
 
 
 if __name__ == '__main__':
