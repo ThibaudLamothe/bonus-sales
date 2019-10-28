@@ -27,7 +27,7 @@ app.layout = html.Section(
             children=[
                 html.Div(html.Img(className='test', src=img_top_url, height="150")),
                 html.H1("Application de calcul du Bonus à destination des Sales"),
-                html.P("Conformément à la politique établie de l'entreprise, cette page vous permettra de faire la simulation de Bonus."),
+                html.P("Conformément à la politique établie par l'entreprise, cette page vous permettra de faire la simulation de votre bonus annuel."),
                 html.Br(),
                 html.Div('Entrez votre salaire brut'),
                 html.Div(
