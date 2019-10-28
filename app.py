@@ -42,7 +42,7 @@ app.layout = html.Section(
                 html.Div(
                     dcc.Input(
                         id='input-box-2',
-                        type='text',
+                        type='number',
                         placeholder=3,
                     ),
                 ),
@@ -50,7 +50,7 @@ app.layout = html.Section(
                 html.Div(
                     dcc.Input(
                         id='input-box-3',
-                        type='text',
+                        type='number',
                         placeholder=5,
                     )
                 ),
