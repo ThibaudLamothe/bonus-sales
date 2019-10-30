@@ -1,0 +1,1 @@
+The application is available right [here](https://bonus-sales.herokuapp.com/)
